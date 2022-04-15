@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	var target float64
+	var result float64
 
 	args := os.Args
 
@@ -17,17 +17,17 @@ func main() {
 		panic(err.Error())
 	}
 
-	targetUnit := args[2]
-	if targetUnit != "-f" && targetUnit != "-c" {
+	resultUnit := args[2]
+	if resultUnit != "-f" && resultUnit != "-c" {
 		panic("Incorrect translation unit")
 	}
 
-	if targetUnit == "-c" {
-		target = (num - 32) / 1.8
+	if resultUnit == "-c" {
+		result = (num - 32) / 1.8
 	} else {
-		target = num*1.8 + 32
+		result = num*1.8 + 32
 	}
 
 	// round up to 2 digits after point
-	fmt.Println(math.Round(target*100) / 100)
+	fmt.Println(math.Round(result*100) / 100)
 }
