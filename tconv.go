@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"math"
 	"os"
@@ -8,19 +9,24 @@ import (
 )
 
 func main() {
-	var result float64
-
-	args := os.Args
-
-	num, err := strconv.ParseFloat(args[1], 64)
+	num, err := strconv.ParseFloat(os.Args[1], 64)
 	if err != nil {
 		panic(err.Error())
 	}
 
-	resultUnit := args[2]
-	if resultUnit != "-f" && resultUnit != "-c" {
-		panic("Incorrect translation unit")
+	resultUnit, err := getResultUnit()
+	if err != nil {
+		panic(err.Error())
 	}
+
+	result := tconv(num, resultUnit)
+
+	fmt.Println(result)
+
+}
+
+func tconv(num float64, resultUnit string) float64 {
+	var result float64
 
 	if resultUnit == "-c" {
 		result = (num - 32) / 1.8
@@ -29,5 +35,13 @@ func main() {
 	}
 
 	// round up to 2 digits after point
-	fmt.Println(math.Round(result*100) / 100)
+	return math.Round(result*100) / 100
+}
+
+func getResultUnit() (string, error) {
+	unit := os.Args[2]
+	if unit != "-f" && unit != "-c" {
+		return unit, errors.New("incorrect translation unit")
+	}
+	return unit, nil
 }
