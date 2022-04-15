@@ -1,4 +1,4 @@
-package main
+package tconv
 
 import (
 	"errors"
@@ -8,7 +8,7 @@ import (
 	"strconv"
 )
 
-func main() {
+func tconv() {
 	num, err := strconv.ParseFloat(os.Args[1], 64)
 	if err != nil {
 		panic(err.Error())
@@ -19,13 +19,13 @@ func main() {
 		panic(err.Error())
 	}
 
-	result := tconv(num, resultUnit)
+	result := calculate(num, resultUnit)
 
 	fmt.Println(result)
 
 }
 
-func tconv(num float64, resultUnit string) float64 {
+func calculate(num float64, resultUnit string) float64 {
 	var result float64
 
 	if resultUnit == "-c" {
