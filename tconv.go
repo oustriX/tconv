@@ -1,4 +1,4 @@
-package tconv
+package main
 
 import (
 	"errors"
@@ -8,15 +8,24 @@ import (
 	"strconv"
 )
 
-func tconv() {
+func main() {
+	if len(os.Args) < 3 {
+		fmt.Println("you missed a few arguments")
+		fmt.Printf("must: 2. you entered: %d\n", len(os.Args)-1)
+		return
+	}
+
 	num, err := strconv.ParseFloat(os.Args[1], 64)
 	if err != nil {
-		panic(err.Error())
+		fmt.Println("can't parse number in your first argument")
+		fmt.Printf("error message: %s\n", err.Error())
+		return
 	}
 
 	resultUnit, err := getResultUnit()
 	if err != nil {
-		panic(err.Error())
+		fmt.Println("error when trying to convert")
+		fmt.Printf("error message: %d\n", err.Error())
 	}
 
 	result := calculate(num, resultUnit)
